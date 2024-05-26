@@ -1,67 +1,53 @@
-(function () {
-'use strict';
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body>
+  <div class="container">
+  <h1>Shopping List Check Off</h1>
 
-angular.module('ShoppingListApp', [])
-.controller('ToBuyController', ToBuyController)
-.controller('AlreadyBoughtController', AlreadyBoughtController)
-.service('ShoppingListCheckOffService', ShoppingListCheckOffService);
+  <div class="row">
 
-// LIST #1 - controller
-ToBuyController.$inject = ['ShoppingListCheckOffService'];
-function ToBuyController(ShoppingListCheckOffService) {
-  var list1 = this;
+    <!-- To Buy List -->
+    <div class="col-md-6">
+     <h2>To Buy:</h2>
+     <ul>
+       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+     </ul>
+     <div class="emptyMessage">Everything is bought!</div>
+    </div>
 
-  list1.items = ShoppingListCheckOffService.buyItemsList();
+    <!-- Already Bought List -->
+    <div class="col-md-6">
+     <h2>Already Bought:</h2>
+     <ul>
+       <li>Bought 10 cookies</li>
+     </ul>
+     <div class="emptyMessage">Nothing bought yet.</div>
+    </div>
+  </div>
+</div>
 
-  list1.buyItem = function (itemIndex) {
-    ShoppingListCheckOffService.buyItem(itemIndex);
-  }
-
-  list1.isListEmpty = function() {
-      return !list1.items.length;
-  }
-}
-
-
-// LIST #2 - controller
-AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
-function AlreadyBoughtController(ShoppingListCheckOffService) {
-  var list2 = this;
-
-  list2.items = ShoppingListCheckOffService.boughtItemsList();
-
-  list2.isListEmpty = function() {
-      return !list2.items.length;
-  }
-}
-
-
-function ShoppingListCheckOffService () {
-  var service = this;
-  var itemsToBuy =  [
-                      {name: "bread", quantity: 8},
-                      {name: "potato", quantity: 4},
-                      {name: "tomatoes", quantity: 3},
-                      {name: "onion", quantity: 2},
-                      {name: "olive oil", quantity: 1},
-                      {name: "salt", quantity: 1},
-                      {name: "tuna", quantity: 3}
-                    ]
-
-  var boughtItems = [];
-
-  service.buyItem = function (itemIndex) {
-    boughtItems.push(itemsToBuy.splice(itemIndex, 1)[0]);
-  };
-
-
-  service.buyItemsList = function () {
-    return itemsToBuy;
-  };
-
-  service.boughtItemsList = function () {
-    return boughtItems;
-  };
-}
-
-})();
+</body>
+</html>
